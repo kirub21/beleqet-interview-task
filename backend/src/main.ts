@@ -12,7 +12,7 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule, { bufferLogs: true, rawBody: true });
 
   const configService = app.get(ConfigService);
-  const port = process.env.PORT || 4000;
+  const port = Number(process.env.PORT) || 4000;
   const nodeEnv = configService.get<string>('NODE_ENV', 'development');
 
   // ── Security ──────────────────────────────────────────────────────────────
@@ -73,7 +73,7 @@ async function bootstrap() {
   // ── Graceful shutdown ─────────────────────────────────────────────────────
   app.enableShutdownHooks();
 
-  await app.listen(process.env.PORT);
+  await app.listen(port);
   logger.log(`🚀 Beleqet API running on http://localhost:${port}/api/v1`);
   logger.log(`   Environment: ${nodeEnv}`);
 }
