@@ -9,8 +9,13 @@ import { LoggingInterceptor } from './common/interceptors/logging.interceptor';
 
 async function bootstrap() {
   const logger = new Logger('Bootstrap');
-  const app = await NestFactory.create(AppModule, { bufferLogs: true, rawBody: true });
-
+  console.log("Creating Nest app...");
+  const app = await NestFactory.create(AppModule, {
+  logger: ['error', 'warn', 'log', 'debug'],
+  rawBody: true,
+  });
+  console.log("Nest app created");
+  console.log("Loading Config...");
   const configService = app.get(ConfigService);
   const port = Number(process.env.PORT) || 4000;
   const nodeEnv = configService.get<string>('NODE_ENV', 'development');
@@ -72,7 +77,7 @@ async function bootstrap() {
 
   // ── Graceful shutdown ─────────────────────────────────────────────────────
   app.enableShutdownHooks();
-
+  console.log("About to listen...");
   await app.listen(port);
   logger.log(`🚀 Beleqet API running on http://localhost:${port}/api/v1`);
   logger.log(`   Environment: ${nodeEnv}`);
