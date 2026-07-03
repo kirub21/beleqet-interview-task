@@ -73,7 +73,7 @@ async function bootstrap() {
   // ── Graceful shutdown ─────────────────────────────────────────────────────
   app.enableShutdownHooks();
 
-  await app.listen(port, '0.0.0.0');
+  await app.listen(process.env.PORT);
   logger.log(`🚀 Beleqet API running on http://localhost:${port}/api/v1`);
   logger.log(`   Environment: ${nodeEnv}`);
 }
