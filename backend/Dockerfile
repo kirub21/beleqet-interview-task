@@ -27,6 +27,6 @@ COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/dist ./dist
 COPY --from=builder /app/prisma ./prisma
 
-EXPOSE 4000
-
-CMD ["npm", "run", "start:prod"]
+EXPOSE 10000
+ 
+CMD ["sh", "-c", "npx prisma migrate deploy && npm run start:prod"]
